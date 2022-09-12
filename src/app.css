@@ -57,3 +57,8 @@ input[type='checkbox']:checked ~ .toggle-circle {
 input[type='checkbox']:checked ~ .toggle-path {
 	@apply bg-blue-500 border-blue-600;
 }
+
+.zap-custom {
+	background-color: #721785;
+	color: white;
+}

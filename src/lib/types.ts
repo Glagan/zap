@@ -1,5 +1,5 @@
 export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
-export type Theme = 'success' | 'info' | 'error' | 'warning' | 'message';
+export type Theme = 'success' | 'info' | 'error' | 'warning' | 'message' | 'custom';
 
 export type Notification = {
 	id: number;
@@ -11,6 +11,7 @@ export type Notification = {
 	imageAlt: string;
 	buttons: Button[];
 	options: Partial<Options>;
+	classes: string[];
 	// * Interaction
 	disableButtons(): void;
 	removeButtons(): void;
@@ -25,6 +26,7 @@ export type NotificationContent = Partial<{
 	image: string;
 	imageAlt: string;
 	buttons: Button[];
+	classes: string[];
 }>;
 
 export type InsertAnimation =
@@ -65,6 +67,7 @@ export interface Content {
 	text?: string;
 	title?: string;
 	buttons?: Button[];
+	classes?: string[];
 }
 
 export type RecursiveTagString = string | { tag: TagDescription; str: RecursiveTagString[] };

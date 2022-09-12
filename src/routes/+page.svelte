@@ -31,13 +31,13 @@
 	let insertAnimation = options.insertAnimation!;
 	let removeAnimation = options.removeAnimation!;
 
-	const quickButtons: { type: Type; name: string; bg: string }[] = [
+	const quickButtons: { type: Theme; name: string; bg: string }[] = [
 		{ type: 'success', name: 'Success', bg: 'bg-green-600' },
 		{ type: 'info', name: 'Info', bg: 'bg-blue-600' },
 		{ type: 'error', name: 'Error', bg: 'bg-red-600' },
 		{ type: 'warning', name: 'Warning', bg: 'bg-yellow-600' },
-		{ type: 'message', name: 'Message', bg: 'bg-gray-800' }
-		// custom: { name: 'Custom', bg: 'bg-indigo-200' }
+		{ type: 'message', name: 'Message', bg: 'bg-gray-800' },
+		{ type: 'custom', name: 'Custom', bg: 'bg-indigo-200' }
 	];
 
 	let currentExample = 0;
@@ -202,17 +202,25 @@
 		}
 	];
 
-	function exampleNotification(type: Type, position: Position) {
+	function exampleNotification(type: Theme, position: Position) {
 		const example = deepAssign({}, examples[currentExample]!);
 		const options: Partial<Options> = example.options ?? {};
 		options.position = position;
-		zap[type](example.content, options);
+		if (type == 'custom') {
+			zap.custom(['zap-custom'], example.content, options);
+		} else {
+			zap[type](example.content, options);
+		}
 		currentExample = ++currentExample % examples.length;
 	}
 
 	function submitForm() {
 		if (content.title || content.image || content.message) {
-			zap[type](content, options);
+			if (type == 'custom') {
+				zap[type](['zap-custom'], content, options);
+			} else {
+				zap[type](content, options);
+			}
 		} else {
 			zap.error({
 				title: 'Missing field',
@@ -315,6 +323,7 @@
 							<option value="error">Error</option>
 							<option value="warning">Warning</option>
 							<option value="message">Message</option>
+							<option value="custom">Custom</option>
 						</select>
 					</div>
 					<div>
@@ -469,6 +478,3 @@
 	</div>
 </div>
 <ZapContainer />
-
-<style>
-</style>

@@ -6,6 +6,7 @@
 
 	export let notification: Notification;
 	const options: Partial<Options> = notification.options!;
+	$: classes = notification.classes ? notification.classes.join(' ') : undefined;
 
 	let inserting = true;
 	let retire = false;
@@ -104,7 +105,7 @@
 </script>
 
 <div
-	class={`zap-notification zap-${notification.theme} zap-${options.position}`}
+	class={`zap-notification zap-${notification.theme} ${classes} zap-${options.position}`}
 	class:zap-insert={inserting}
 	class:zap-remove={addRemoveClass}
 	class:zap-close-on-click={options.closeOnClick}

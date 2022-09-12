@@ -95,6 +95,13 @@ export const notifications = (() => {
 		message(content: NotificationContent, options?: Partial<Options>): Notification {
 			return create('message', content, options);
 		},
+		custom(
+			classes: string[],
+			content: NotificationContent,
+			options?: Partial<Options>
+		): Notification {
+			return create('custom', { classes, ...content }, options);
+		},
 		create,
 		push,
 		remove(which: number) {
