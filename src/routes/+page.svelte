@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Notification from '$lib/components/Notification.svelte';
 	import ZapContainer from '$lib/components/ZapContainer.svelte';
 	import { notifications } from '$lib/stores/notifications';
 	import type { NotificationContent, Options, Position, Theme, Type } from '$lib/types';
@@ -15,6 +14,7 @@
 
 	const options: Partial<Options> = {
 		position: 'top-right',
+		closeOnClick: true,
 		sticky: false,
 		insertAnimation: {
 			name: 'default-insert',
@@ -184,10 +184,6 @@
 		}
 	];
 
-	function toggleSticky() {
-		options.sticky = !options.sticky;
-	}
-
 	function exampleNotification(type: Type, position: Position) {
 		const example = examples[currentExample]!;
 		const options: Partial<Options> = example.options ?? {};
@@ -295,11 +291,11 @@
 		</div>
 		<div class="overflow-hidden border-2 border-gray-400 rounded-md bg-gray-600">
 			<p class="p-2">Try out all <b>Simple Notifications</b> parameters !</p>
-			<form class="p-2" on:submit.prevent={submitForm}>
+			<form class="p-2" on:submit|preventDefault={submitForm}>
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
 					<div>
 						<label for="type">Type</label>
-						<select name="type" id="type" v-model="type">
+						<select name="type" id="type" bind:value={type}>
 							<option value="success">Success</option>
 							<option value="info">Information</option>
 							<option value="error">Error</option>
@@ -309,7 +305,7 @@
 					</div>
 					<div>
 						<label for="position">Position</label>
-						<select name="position" id="position" v-model="options.position">
+						<select name="position" id="position" bind:value={options.position}>
 							<option value="top-left">top-left</option>
 							<option value="top-center">top-center</option>
 							<option value="top-right">top-right (default)</option>
@@ -322,7 +318,7 @@
 						<label for="sticky" class="flex items-center cursor-pointer">
 							<div class="px-2">Sticky</div>
 							<div class="toggle-wrapper relative">
-								<input id="sticky" type="checkbox" class="hidden" v-model="options.sticky" />
+								<input id="sticky" type="checkbox" class="hidden" bind:checked={options.sticky} />
 								<div class="toggle-path" />
 								<div class="toggle-circle" />
 							</div>
@@ -335,13 +331,13 @@
 						<select
 							name="insertAnimationName"
 							id="insertAnimationName"
-							v-model="options.insertAnimation.name"
+							bind:value={options.insertAnimation.name}
 						>
 							<option value="default-insert">default-insert (default)</option>
 							<option value="insert-left">insert-left</option>
 							<option value="insert-top">insert-top</option>
 							<option value="insert-right">insert-right</option>
-							<option value="insert-left">insert-left</option>
+							<option value="insert-bottom">insert-bottom</option>
 							<option value="fadein">fadein</option>
 							<option value="scalein">scalein</option>
 							<option value="rotatein">rotatein</option>
@@ -356,7 +352,7 @@
 								name="insertAnimationDuration"
 								id="insertAnimationDuration"
 								placeholder="Duration (ms)"
-								v-model="options.insertAnimation.duration"
+								bind:value={options.insertAnimation.duration}
 							/>
 						</div>
 					</div>
@@ -368,7 +364,7 @@
 								name="duration"
 								id="duration"
 								placeholder="Duration (ms)"
-								v-model="options.duration"
+								bind:value={options.duration}
 							/>
 						</div>
 					</div>
@@ -379,7 +375,7 @@
 						<select
 							name="removeAnimationName"
 							id="removeAnimationName"
-							v-model="options.removeAnimation.name"
+							bind:value={options.removeAnimation.name}
 						>
 							<option value="fadeout">fadeout (default)</option>
 							<option value="scaleout">scaleout</option>
@@ -394,7 +390,7 @@
 								name="removeAnimationDuration"
 								id="removeAnimationDuration"
 								placeholder="Duration (ms)"
-								v-model="options.removeAnimation.duration"
+								bind:value={options.removeAnimation.duration}
 							/>
 						</div>
 					</div>
@@ -413,7 +409,7 @@
 							name="title"
 							id="title"
 							placeholder="Title"
-							v-model="content.title"
+							bind:value={content.title}
 						/>
 					</div>
 					<div>
@@ -423,17 +419,17 @@
 							name="image"
 							id="image"
 							placeholder="Image URL"
-							v-model="content.image"
+							bind:value={content.image}
 						/>
 					</div>
 				</div>
 				<div class="mb-4">
-					<label for="text">Content</label>
+					<label for="message">Content</label>
 					<textarea
-						name="text"
-						id="text"
+						name="message"
+						id="message"
 						placeholder="Notification content"
-						v-model="content.text"
+						bind:value={content.message}
 					/>
 				</div>
 				<button type="submit" class="display">Display</button>
