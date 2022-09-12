@@ -16,6 +16,8 @@ export const notifications = (() => {
 		// Set the insert and remove animations
 		if (!options) {
 			options = deepAssign({}, get(defaultOptions));
+		} else {
+			options = deepAssign({}, get(defaultOptions), options);
 		}
 
 		if (!options.insertAnimation) {
@@ -54,12 +56,12 @@ export const notifications = (() => {
 			}
 		}
 
-		const notification: Notification = {
+		const notification = {
 			id: Date.now(),
 			theme,
 			...content,
 			options
-		};
+		} as Notification;
 
 		wrappers.make(notification.options?.position ?? get(defaultOptions).position);
 		notifications.push(notification);

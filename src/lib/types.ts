@@ -1,7 +1,9 @@
 export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 export type Theme = 'success' | 'info' | 'error' | 'warning' | 'message';
 
-export type Notification = { id: number } & Partial<{
+export type Notification = {
+	id: number;
+	// * Definition
 	theme: Theme;
 	title: string;
 	message: string;
@@ -9,7 +11,13 @@ export type Notification = { id: number } & Partial<{
 	imageAlt: string;
 	buttons: Button[];
 	options: Partial<Options>;
-}>;
+	// * Interaction
+	disableButtons(): void;
+	removeButtons(): void;
+	close(): void;
+	destroy(): void;
+	repaint(): void;
+};
 
 export type NotificationContent = Partial<{
 	title: string;
@@ -35,7 +43,9 @@ export type AnimationDefinition<T> = {
 	duration?: number;
 };
 
-export type eventCallback = (notification: Notification) => void;
+export type eventCallback =
+	| ((notification: Notification) => unknown)
+	| ((notification: Notification) => Promise<unknown>);
 export type Events = {
 	onCreate?: eventCallback;
 	onDisplay?: eventCallback;

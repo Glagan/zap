@@ -6,7 +6,6 @@
 	import '../zap.css';
 
 	export let notification: Notification;
-	const { theme, title, message, image, imageAlt, buttons } = notification;
 	const options: Options = notification.options!;
 
 	let inserting = true;
@@ -14,9 +13,13 @@
 	let showProgressBar = !options.sticky;
 	let doExtinguish = false;
 
+	function repaint() {
+		notification = notification;
+	}
+
 	function onAnimation(event: AnimationEvent) {
 		if (event.animationName == options.removeAnimation.name) {
-			close(false);
+			destroy(false);
 		} else if (event.animationName == options.insertAnimation.name) {
 			inserting = false;
 			if (showProgressBar) {
@@ -35,27 +38,27 @@
 		} else if (event.animationName == 'shorten') {
 			retire = true;
 			if (options.events?.onDeath) {
-				/// @ts-expect-error
-				options.events.onDeath(this);
+				(async () => {
+					await options.events.onDeath(notification);
+					repaint();
+				})();
 			} else {
 				disableButtons();
-				closeAnimated();
+				close();
 			}
 		}
 	}
 
-	export function close(fromUser = false) {
-		/// @ts-expect-error
+	export function destroy(fromUser = false) {
 		notifications.remove(notification.id);
 		if (options.events?.onClose) {
-			/// @ts-expect-error
-			options.events.onClose(this, fromUser);
+			options.events.onClose(notification, fromUser);
 		}
 	}
 
 	let closing = false;
 	let addRemoveClass = false;
-	export function closeAnimated() {
+	export function close() {
 		// Add the fadeout animation
 		closing = true;
 		addRemoveClass = true;
@@ -82,22 +85,27 @@
 		}
 	}
 
-	let buttonsDisabled = true;
+	let buttonsDisabled = false;
 	export function disableButtons() {
-		buttonsDisabled = false;
+		buttonsDisabled = true;
 	}
-	let showButtons = true;
 	export function removeButtons() {
-		showButtons = false;
+		notification.buttons = [];
 	}
 
+	notification.disableButtons = disableButtons;
+	notification.removeButtons = removeButtons;
+	notification.close = close;
+	notification.destroy = destroy;
+	notification.repaint = repaint;
+
 	if (options.events?.onCreate) {
-		options.events.onCreate(this);
+		options.events.onCreate(notification);
 	}
 </script>
 
 <div
-	class={`zap-notification zap-${theme} zap-${options.position}`}
+	class={`zap-notification zap-${notification.theme} zap-${options.position}`}
 	class:zap-insert={inserting}
 	class:zap-remove={addRemoveClass}
 	class:zap-close-on-click={options.closeOnClick}
@@ -108,39 +116,39 @@
 		: undefined}
 	title={options.closeOnClick ? 'Click to close.' : undefined}
 	on:animationend={onAnimation}
-	on:click={options.closeOnClick ? close.bind(null, true) : undefined}
+	on:click={options.closeOnClick ? destroy.bind(null, true) : undefined}
 	on:mouseenter={onHover}
 	on:mouseleave={onLeave}
 	{...$$restProps}
 >
-	{#if title}
-		<h1 {title}>
-			{title}
+	{#if notification.title}
+		<h1 title={notification.title}>
+			{notification.title}
 			{#if options.closeOnClick}
 				<span title="Click to close." class="zap-close zap-close-title">❌</span>
 			{/if}
 		</h1>
 	{/if}
-	{#if !title && options.closeOnClick}
-		<span title="Click to close." class="zap-close" on:click={close.bind(null, false)}>❌</span>
+	{#if !notification.title && options.closeOnClick}
+		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, false)}>❌</span>
 	{/if}
-	{#if image || message}
+	{#if notification.image || notification.message}
 		<div class="zap-content">
-			{#if image}
-				<img src={image} alt={imageAlt} />
+			{#if notification.image}
+				<img src={notification.image} alt={notification.imageAlt} />
 			{/if}
-			{#if message}
-				<div class="zap-text">{message}</div>
+			{#if notification.message}
+				<div class="zap-text">{notification.message}</div>
 			{/if}
 		</div>
 	{/if}
-	{#if showButtons && buttons && buttons.length > 0}
+	{#if notification.buttons && notification.buttons.length > 0}
 		<div class="zap-buttons">
-			{#each buttons as button}
+			{#each notification.buttons as button}
 				<button
 					class={`zap-button zap-${button.type}`}
 					disabled={buttonsDisabled}
-					on:click={button.onClick ?? undefined}
+					on:click={button.onClick ? button.onClick.bind(null, notification) : undefined}
 				>
 					{button.value}
 				</button>
@@ -151,6 +159,7 @@
 		<span
 			class="zap-lifespan"
 			class:zap-extinguish={doExtinguish}
+			class:zap-retire={retire}
 			style={`animation-duration: ${options.duration}ms`}
 		/>
 	{/if}
