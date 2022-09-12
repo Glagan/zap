@@ -2,7 +2,7 @@
 	import ZapContainer from '$lib/components/ZapContainer.svelte';
 	import { notifications } from '$lib/stores/notifications';
 	import type { NotificationContent, Options, Position, Theme, Type } from '$lib/types';
-	import { deepAssign } from '$lib/utils/deepAssign';
+	import deepAssign from '$lib/utils/deepAssign';
 	import '../app.css';
 
 	let type: Theme = 'success';
@@ -82,7 +82,7 @@
 			content: {
 				title: 'Custom Tags',
 				message:
-					'You can also easily __add__ your own style with ``SimpleNotification.addTag()``.\nSee {{!https://github.com/Glagan/SimpleNotification#text-tag}} to know how.'
+					'You can also easily __add__ your own style with ``zap.addTag()``.\nSee {{!https://github.com/Glagan/zap#text-tag}} to know how.'
 			}
 		},
 		{
@@ -228,12 +228,12 @@
 			<a
 				title="Github Repository"
 				target="_blank"
-				href="https://github.com/Glagan/SimpleNotification"
+				href="https://github.com/Glagan/zap"
 				rel="noreferrer noopener"
 			>
 				<span class="inline-block w-full text-lg text-gray-400">Glagan</span>
 				<span class="text-xl text-gray-200">
-					SimpleNotification
+					zap
 					<img
 						class="inline-block align-middle"
 						height="16"

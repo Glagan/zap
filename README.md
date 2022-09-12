@@ -76,7 +76,7 @@ notification.repaint(); // A repaint() call is necessary (for now ?)
 
 ## Options
 
-There are a few options that you can set by using ``zapOptions.set(options)`` or more specifically for a single notification on the third parameter.
+There are a few options that you can set by using ``zapOptions.setDefault(options)`` or more specifically for a single notification on the third parameter.
 
 | Name | Description | Default |
 |---|---|---|
