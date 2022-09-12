@@ -59,7 +59,8 @@ zap.success({
             // You can call notification.remove(), notification.close() or notification.closeFadeout()
             // if you wish to remove the notification by clicking on  the buttons
         }
-    }]
+    }],
+    classes: ['class'] // Optional additional CSS classes applied to the notification
 }, options); // See the the list of options below
 ```
 
@@ -91,8 +92,6 @@ There are a few options that you can set by using ``zapOptions.setDefault(option
 | insertAnimation | Object with CSS class name and duration, see [Animations](#Animations). | ``{ name: 'default-insert', duration: 250 }`` |
 | removeAnimation | Object with CSS class name and duration, see [Animations](#Animations). | ``{ name: 'fadeout', duration: 400 }`` |
 | display | Display the notification when creating it. | true |
-
-> If a notification is ``sticky`` and ``closeOnClick`` is disabled, ``closeButton`` is set to true to always have a way to close a notification.
 
 ## Events
 
@@ -148,7 +147,7 @@ Most of these tags can be nested to combine their effects.
 Tags work by looking for an open token, an optional separator if there is a title, and the close token.
 If the tag can have a *title* you need to use ``|`` as the separator with the *content*.
 
-You can add custom tags easily by adding them to ``zapOptions.tags``.
+You can add custom tags easily by adding them with ``tags.addTag(name, definition)``.
 A tag object can have the following properties:
 
 ```javascript
