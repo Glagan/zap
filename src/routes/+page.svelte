@@ -2,6 +2,7 @@
 	import ZapContainer from '$lib/components/ZapContainer.svelte';
 	import { notifications } from '$lib/stores/notifications';
 	import type { NotificationContent, Options, Position, Theme, Type } from '$lib/types';
+	import { deepAssign } from '$lib/utils/deepAssign';
 	import '../app.css';
 
 	let type: Theme = 'success';
@@ -14,27 +15,30 @@
 
 	const options: Partial<Options> = {
 		position: 'top-right',
+		pauseOnHover: true,
 		closeOnClick: true,
 		sticky: false,
 		insertAnimation: {
 			name: 'default-insert',
 			duration: 250
 		},
-		duration: 4000,
+		duration: 3000,
 		removeAnimation: {
 			name: 'fadeout',
 			duration: 400
 		}
 	};
+	let insertAnimation = options.insertAnimation!;
+	let removeAnimation = options.removeAnimation!;
 
-	const quickButtons: Record<Type, { name: string; bg: string }> = {
-		success: { name: 'Success', bg: 'bg-green-600' },
-		info: { name: 'Info', bg: 'bg-blue-600' },
-		error: { name: 'Error', bg: 'bg-red-600' },
-		warning: { name: 'Warning', bg: 'bg-yellow-600' },
-		message: { name: 'Message', bg: 'bg-gray-800' }
+	const quickButtons: { type: Type; name: string; bg: string }[] = [
+		{ type: 'success', name: 'Success', bg: 'bg-green-600' },
+		{ type: 'info', name: 'Info', bg: 'bg-blue-600' },
+		{ type: 'error', name: 'Error', bg: 'bg-red-600' },
+		{ type: 'warning', name: 'Warning', bg: 'bg-yellow-600' },
+		{ type: 'message', name: 'Message', bg: 'bg-gray-800' }
 		// custom: { name: 'Custom', bg: 'bg-indigo-200' }
-	};
+	];
 
 	let currentExample = 0;
 	const examples: { content: NotificationContent; options?: Partial<Options> }[] = [
@@ -47,7 +51,7 @@
 		{
 			content: {
 				title: 'Multi-line',
-				message: 'Can be multi-line using ``\\r``, ``\\r\\n`` or ``\\n``.\nLike this.'
+				message: 'Can be multi-line !\nLike this.'
 			}
 		},
 		{
@@ -95,8 +99,8 @@
 					{
 						value: 'Open',
 						type: 'success',
-						onClick: (notification) => {
-							SimpleNotification.success(
+						onClick: () => {
+							notifications.success(
 								{
 									title: 'Another One !',
 									message: 'You opened another notification without closing the old one.'
@@ -109,15 +113,15 @@
 						value: 'Close',
 						type: 'error',
 						onClick: (notification) => {
-							SimpleNotification.message(
+							notifications.message(
 								{
 									title: 'Closing...',
 									message:
-										'The other notification will close with a fadeout thanks to ``notification.closeAnimated()``.'
+										'The other notification will close with a fadeout thanks to ``notification.close()``.'
 								},
 								{ position: 'bottom-right', insertAnimation: { name: 'rotatein' } }
 							);
-							notification.closeAnimated();
+							notification.close();
 						}
 					}
 				]
@@ -133,7 +137,7 @@
 						value: 'Click me',
 						type: 'info',
 						onClick: (notification) => {
-							SimpleNotification.success(
+							notifications.success(
 								{
 									title: 'Nice',
 									message: 'You did it **:)**'
@@ -150,12 +154,13 @@
 				events: {
 					onDeath: (notification) => {
 						notification.disableButtons();
-						notification.setType('info');
-						notification.buttons!.childNodes[0].textContent = 'Disabled';
-						notification.setTitle('Gotta go faster');
-						notification.setText(
-							"Buttons can be **disabled** after the timer expired.\nYou can also choose to hide the notification, or change a lot of it's content."
-						);
+						notification.theme = 'info';
+						if (notification.buttons && notification.buttons.length > 0) {
+							notification.buttons[0].value = 'Disabled';
+						}
+						notification.title = 'Gotta go faster';
+						notification.message =
+							"Buttons can be **disabled** after the timer expired.\nYou can also choose to hide the notification, or change a lot of it's content.";
 					}
 				}
 			}
@@ -171,13 +176,26 @@
 				duration: 2000,
 				events: {
 					onDeath: (notification) => {
-						notification.events.onDeath = undefined;
+						if (!notification.options) {
+							notification.options = {};
+						}
+						if (!notification.options.events) {
+							notification.options.events = {};
+						}
+						notification.options.events.onDeath = undefined;
 						notification.removeButtons();
-						notification.setType('message');
-						notification.addButton('error', 'Close', (notification) => {
-							notification.closeAnimated();
+						notification.theme = 'message';
+						if (!notification.buttons) {
+							notification.buttons = [];
+						}
+						notification.buttons.push({
+							type: 'error',
+							value: 'Close',
+							onClick: (notification) => {
+								notification.close();
+							}
 						});
-						notification.setText('You can now click on the button to close this notification.');
+						notification.message = 'You can now click on the button to close this notification.';
 					}
 				}
 			}
@@ -185,10 +203,10 @@
 	];
 
 	function exampleNotification(type: Type, position: Position) {
-		const example = examples[currentExample]!;
+		const example = deepAssign({}, examples[currentExample]!);
 		const options: Partial<Options> = example.options ?? {};
 		options.position = position;
-		notifications[type](example.content, example.options);
+		notifications[type](example.content, options);
 		currentExample = ++currentExample % examples.length;
 	}
 
@@ -242,22 +260,20 @@
 			<p class="p-2">Click on the buttons to show example notifications.</p>
 			<div class="flex justify-around text-center mb-4">
 				<div class="corner">
-					{#each Object.keys(quickButtons) as key}
-						{@const q = quickButtons[key]}
+					{#each quickButtons as q}
 						<button
 							class={`btn ${q.bg}`}
-							on:click={exampleNotification.bind(null, key, 'top-left')}
+							on:click={exampleNotification.bind(null, q.type, 'top-left')}
 						>
 							{q.name}
 						</button>
 					{/each}
 				</div>
 				<div class="corner">
-					{#each Object.keys(quickButtons) as key}
-						{@const q = quickButtons[key]}
+					{#each quickButtons as q}
 						<button
 							class={`btn ${q.bg}`}
-							on:click={exampleNotification.bind(null, key, 'top-right')}
+							on:click={exampleNotification.bind(null, q.type, 'top-right')}
 						>
 							{q.name}
 						</button>
@@ -266,22 +282,20 @@
 			</div>
 			<div class="flex justify-around text-center mb-4">
 				<div class="corner">
-					{#each Object.keys(quickButtons) as key}
-						{@const q = quickButtons[key]}
+					{#each quickButtons as q}
 						<button
 							class={`btn ${q.bg}`}
-							on:click={exampleNotification.bind(null, key, 'bottom-left')}
+							on:click={exampleNotification.bind(null, q.type, 'bottom-left')}
 						>
 							{q.name}
 						</button>
 					{/each}
 				</div>
 				<div class="corner">
-					{#each Object.keys(quickButtons) as key}
-						{@const q = quickButtons[key]}
+					{#each quickButtons as q}
 						<button
 							class={`btn ${q.bg}`}
-							on:click={exampleNotification.bind(null, key, 'bottom-right')}
+							on:click={exampleNotification.bind(null, q.type, 'bottom-right')}
 						>
 							{q.name}
 						</button>
@@ -292,7 +306,7 @@
 		<div class="overflow-hidden border-2 border-gray-400 rounded-md bg-gray-600">
 			<p class="p-2">Try out all <b>Simple Notifications</b> parameters !</p>
 			<form class="p-2" on:submit|preventDefault={submitForm}>
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
 					<div>
 						<label for="type">Type</label>
 						<select name="type" id="type" bind:value={type}>
@@ -314,24 +328,14 @@
 							<option value="bottom-right">bottom-right</option>
 						</select>
 					</div>
-					<div class="flex justify-center items-center">
-						<label for="sticky" class="flex items-center cursor-pointer">
-							<div class="px-2">Sticky</div>
-							<div class="toggle-wrapper relative">
-								<input id="sticky" type="checkbox" class="hidden" bind:checked={options.sticky} />
-								<div class="toggle-path" />
-								<div class="toggle-circle" />
-							</div>
-						</label>
-					</div>
 				</div>
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
 					<div>
 						<label for="insertAnimationName">Insert Animation</label>
 						<select
 							name="insertAnimationName"
 							id="insertAnimationName"
-							bind:value={options.insertAnimation.name}
+							bind:value={insertAnimation.name}
 						>
 							<option value="default-insert">default-insert (default)</option>
 							<option value="insert-left">insert-left</option>
@@ -352,10 +356,12 @@
 								name="insertAnimationDuration"
 								id="insertAnimationDuration"
 								placeholder="Duration (ms)"
-								bind:value={options.insertAnimation.duration}
+								bind:value={insertAnimation.duration}
 							/>
 						</div>
 					</div>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4 items-center">
 					<div>
 						<label for="duration">Display duration (ms)</label>
 						<div>
@@ -368,6 +374,31 @@
 							/>
 						</div>
 					</div>
+					<div class="flex justify-center items-center">
+						<label for="sticky" class="flex items-center cursor-pointer">
+							<div class="px-2">Sticky</div>
+							<div class="toggle-wrapper relative">
+								<input id="sticky" type="checkbox" class="hidden" bind:checked={options.sticky} />
+								<div class="toggle-path" />
+								<div class="toggle-circle" />
+							</div>
+						</label>
+					</div>
+					<div class="flex justify-center items-center">
+						<label for="closeOnClick" class="flex items-center cursor-pointer">
+							<div class="px-2">Close on click</div>
+							<div class="toggle-wrapper relative">
+								<input
+									id="closeOnClick"
+									type="checkbox"
+									class="hidden"
+									bind:checked={options.closeOnClick}
+								/>
+								<div class="toggle-path" />
+								<div class="toggle-circle" />
+							</div>
+						</label>
+					</div>
 				</div>
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
 					<div>
@@ -375,7 +406,7 @@
 						<select
 							name="removeAnimationName"
 							id="removeAnimationName"
-							bind:value={options.removeAnimation.name}
+							bind:value={removeAnimation.name}
 						>
 							<option value="fadeout">fadeout (default)</option>
 							<option value="scaleout">scaleout</option>
@@ -390,7 +421,7 @@
 								name="removeAnimationDuration"
 								id="removeAnimationDuration"
 								placeholder="Duration (ms)"
-								bind:value={options.removeAnimation.duration}
+								bind:value={removeAnimation.duration}
 							/>
 						</div>
 					</div>
