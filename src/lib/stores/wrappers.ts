@@ -17,3 +17,4 @@ export const wrappers = (() => {
 		}
 	};
 })();
+export default wrappers;

@@ -1,8 +1,21 @@
 {
 	"name": "@glagan/zap",
-	"version": "0.1.0",
+	"version": "0.2.5",
 	"author": "Glagan",
 	"license": "GPL-3.0",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Glagan/zap.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Glagan/zap/issues"
+	},
+	"homepage": "https://github.com/Glagan/zap",
+	"keywords": [
+		"svelte",
+		"toast",
+		"notification"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"sync": "svelte-kit sync",
@@ -34,5 +47,14 @@
 		"typescript": "^4.7.4",
 		"vite": "^3.1.0"
 	},
-	"type": "module"
+	"type": "module",
+	"main": "index.js",
+	"files": [
+		"components",
+		"stores",
+		"utils",
+		"index.*",
+		"zap.css"
+	],
+	"types": "types.d.ts"
 }

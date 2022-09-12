@@ -104,3 +104,260 @@
 		width: 0;
 	}
 }
+
+.zap-wrapper {
+	position: fixed;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	z-index: 1080;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.zap-top-right,
+.zap-bottom-right {
+	align-items: flex-end;
+}
+.zap-bottom-right {
+	justify-content: flex-end;
+}
+
+.zap-top-left,
+.zap-bottom-left {
+	align-items: flex-start;
+}
+.zap-bottom-left {
+	justify-content: flex-end;
+}
+
+.zap-top-center,
+.zap-bottom-center {
+	align-items: center;
+}
+.zap-top-center {
+	justify-content: flex-start;
+}
+.zap-bottom-center {
+	justify-content: flex-end;
+}
+
+.zap-notification {
+	flex-shrink: 0;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+		sans-serif;
+	box-shadow: 1px 1px 3px black;
+	border-radius: 3px;
+	overflow: hidden;
+	margin: 1rem;
+	cursor: default;
+	pointer-events: all;
+	min-width: 10rem;
+	max-width: 25rem;
+	position: relative;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.zap-insert {
+	animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+	animation-fill-mode: forwards;
+}
+
+.zap-close-on-click {
+	cursor: pointer;
+}
+.zap-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 1rem;
+	padding: 0.5rem;
+	border-left: 1px solid rgba(0, 0, 0, 0.4);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+	border-bottom-left-radius: 3px;
+	background: rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transition: all 100ms ease-in;
+	cursor: pointer;
+	user-select: none;
+	-moz-user-select: none;
+}
+.zap-notification:hover .zap-close {
+	opacity: 1;
+}
+.zap-close:hover {
+	background: rgba(0, 0, 0, 0.6);
+}
+.zap-close.zap-close-title {
+	display: flex;
+	align-items: center;
+	bottom: 0;
+	border-bottom: 0;
+	border-bottom-left-radius: 0;
+}
+
+.zap-notification > h1 {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+}
+.zap-remove {
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.zap-lifespan {
+	display: block;
+	height: 3px;
+	width: 100%;
+	background-color: #4dd0e1;
+	transition: height 0.4s ease-in-out, width 0s linear;
+}
+.zap-extinguish {
+	animation-duration: 1000ms;
+	animation-name: shorten;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+.zap-lifespan.zap-retire {
+	height: 0px;
+}
+
+.zap-success {
+	background-color: #689f38;
+	color: white;
+}
+.zap-info {
+	background-color: #0288d1;
+	color: white;
+}
+.zap-error {
+	background-color: #b42f2d;
+	color: white;
+}
+.zap-warning {
+	background-color: #d87a00;
+	color: white;
+}
+.zap-message {
+	background-color: #333333;
+	color: white;
+}
+
+.zap-content {
+	display: flex;
+	flex: 1;
+	align-content: space-between;
+	align-items: center;
+}
+.zap-content > img {
+	max-width: 30%;
+	max-height: 20rem;
+	flex-shrink: 0;
+	display: inline-block;
+}
+.zap-content .zap-text {
+	max-width: 100%;
+	word-break: break-word;
+}
+.zap-content > img:only-child,
+.zap-content .zap-text:only-child {
+	max-width: 100%;
+}
+.zap-notification > h1,
+.zap-content .zap-text {
+	padding: 0.5rem;
+	margin: 0;
+	width: 100%;
+}
+
+.zap-content .zap-text a {
+	color: rgba(255, 255, 255, 0.8);
+	transition: all 0.2s ease-in-out;
+}
+.zap-content .zap-text a:hover {
+	text-shadow: 1px 0 1px rgba(255, 255, 255, 0.8);
+	border-radius: 2px;
+}
+.zap-content .zap-text h1,
+.zap-content .zap-text h2 {
+	margin: 0.5rem 0;
+}
+.zap-content .zap-text h1 {
+	font-size: 1.2rem;
+}
+.zap-content .zap-text h2 {
+	font-size: 1.1rem;
+}
+.zap-content .zap-text img {
+	height: auto;
+	max-width: 100%;
+	margin: 0.1rem 0;
+}
+.zap-bold {
+	font-weight: bold;
+}
+.zap-italic {
+	font-style: italic;
+}
+.zap-code {
+	font-family: SFMono-Regular, Menlo, 'Lucida Console', Monaco, Consolas, 'Liberation Mono',
+		'Courier New', monospace;
+	padding: 0.1rem 0.2rem;
+	background-color: #333333;
+	color: #f7f7f7;
+	line-height: 1.4;
+	border-radius: 2px;
+	box-shadow: 0 0 1px #333333;
+}
+.zap-message .zap-code {
+	background-color: #4d4d4d;
+	box-shadow: 0 0 1px #4d4d4d;
+}
+.zap-separator {
+	display: block;
+	width: 100%;
+	border-bottom: 1px solid white;
+	border-radius: 4px;
+	height: 2px;
+	line-height: 0px;
+	margin: 0.75rem 0;
+}
+
+.zap-buttons {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: stretch;
+	align-items: stretch;
+	align-content: stretch;
+	text-align: center;
+	border-top: 1px solid rgba(0, 0, 0, 0.4);
+}
+.zap-button {
+	width: 100%;
+	padding: 0.5rem;
+	border: 0;
+	cursor: pointer;
+	border-right: 1px solid rgba(0, 0, 0, 0.4);
+	transition: all 0.1s ease-in;
+	font-size: 1rem;
+}
+.zap-button:hover {
+	background: rgba(0, 0, 0, 0.6);
+}
+.zap-button:disabled {
+	background: rgba(0, 0, 0, 0.6);
+	filter: grayscale(60%);
+}
+.zap-button:last-child {
+	border-right: 0;
+}
+.zap-float-right {
+	float: right;
+}

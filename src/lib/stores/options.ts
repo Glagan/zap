@@ -1,7 +1,7 @@
 import type { Options } from '$lib/types';
 import { writable } from 'svelte/store';
 
-export const defaultOptions = writable<Options>({
+export const zapOptions = writable<Options>({
 	position: 'top-right',
 	maxNotifications: 0,
 	removeAllOnDisplay: false,
@@ -25,3 +25,4 @@ export const defaultOptions = writable<Options>({
 		duration: 400
 	}
 });
+export default zapOptions;

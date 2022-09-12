@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store';
 import type { Notification, NotificationContent, Options, Theme } from '$lib/types';
-import { defaultOptions } from './default';
+import zapOptions from './options';
 import { wrappers } from './wrappers';
-import { deepAssign } from '$lib/utils/deepAssign';
+import deepAssign from '$lib/utils/deepAssign';
 
 export const notifications = (() => {
 	const notifications: Notification[] = [];
@@ -15,13 +15,13 @@ export const notifications = (() => {
 	): Notification => {
 		// Set the insert and remove animations
 		if (!options) {
-			options = deepAssign({}, get(defaultOptions));
+			options = deepAssign({}, get(zapOptions));
 		} else {
-			options = deepAssign({}, get(defaultOptions), options);
+			options = deepAssign({}, get(zapOptions), options);
 		}
 
 		if (!options.insertAnimation) {
-			options.insertAnimation = { ...get(defaultOptions).insertAnimation };
+			options.insertAnimation = { ...get(zapOptions).insertAnimation };
 		}
 
 		if (options.insertAnimation.name == 'default-insert') {
@@ -44,7 +44,7 @@ export const notifications = (() => {
 		}
 
 		if (!options.removeAnimation) {
-			options.removeAnimation = { ...get(defaultOptions).removeAnimation };
+			options.removeAnimation = { ...get(zapOptions).removeAnimation };
 		}
 
 		/// @ts-expect-error Edge case
@@ -63,14 +63,14 @@ export const notifications = (() => {
 			options
 		} as Notification;
 
-		wrappers.make(notification.options?.position ?? get(defaultOptions).position);
+		wrappers.make(notification.options?.position ?? get(zapOptions).position);
 		notifications.push(notification);
 		set(notifications);
 		return notification;
 	};
 
 	const push = (notification: Omit<Notification, 'id'>) => {
-		wrappers.make(notification.options?.position ?? get(defaultOptions).position);
+		wrappers.make(notification.options?.position ?? get(zapOptions).position);
 		notifications.push({ id: Date.now(), ...notification });
 		set(notifications);
 		return notification;
@@ -106,3 +106,4 @@ export const notifications = (() => {
 		}
 	};
 })();
+export default notifications;
