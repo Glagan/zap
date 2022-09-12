@@ -1,6 +1,6 @@
 {
 	"name": "@glagan/zap",
-	"version": "0.3.0",
+	"version": "0.3.2",
 	"author": "Glagan",
 	"license": "GPL-3.0",
 	"repository": {
@@ -53,8 +53,8 @@
 		"components",
 		"stores",
 		"utils",
+		"tags.*",
 		"index.*",
 		"zap.css"
-	],
-	"types": "types.d.ts"
+	]
 }
