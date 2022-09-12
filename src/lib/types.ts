@@ -1,4 +1,10 @@
-export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+export type Position =
+	| 'top-left'
+	| 'top-center'
+	| 'top-right'
+	| 'bottom-left'
+	| 'bottom-center'
+	| 'bottom-right';
 export type Theme = 'success' | 'info' | 'error' | 'warning' | 'message' | 'custom';
 
 export type Notification = {

@@ -132,13 +132,19 @@
 	{#if notification.title}
 		<h1 title={notification.title}>
 			{notification.title}
-			{#if options.closeOnClick && options.closeButton}
-				<span title="Click to close." class="zap-close zap-close-title">❌</span>
+			{#if options.closeButton}
+				<span
+					title="Click to close."
+					class="zap-close zap-close-title"
+					on:click={destroy.bind(null, true)}
+				>
+					❌
+				</span>
 			{/if}
 		</h1>
 	{/if}
-	{#if !notification.title && options.closeOnClick && options.closeButton}
-		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, false)}>❌</span>
+	{#if !notification.title && options.closeButton}
+		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, true)}>❌</span>
 	{/if}
 	{#if notification.image || notification.message}
 		<div class="zap-content">

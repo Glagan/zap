@@ -48,9 +48,9 @@ export const notifications = (() => {
 				case 'bottom-right':
 					options.insertAnimation.name = 'insert-right';
 					break;
-				// case 'top-center':
-				// 	options.insertAnimation.name = 'insert-top';
-				// 	break;
+				case 'top-center':
+					options.insertAnimation.name = 'insert-top';
+					break;
 				case 'bottom-center':
 					options.insertAnimation.name = 'insert-bottom';
 					break;
