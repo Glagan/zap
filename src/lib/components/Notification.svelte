@@ -1,9 +1,8 @@
 <script lang="ts">
-	import notifications from '$lib/stores/notifications';
-	import deepAssign from '$lib/utils/deepAssign';
-	import type { Notification, AnimationDefinition, Button, Theme, Options } from '$lib/types';
-	import '../zap.css';
+	import notifications from '$lib/stores/zap';
+	import type { Notification, Options } from '$lib/types';
 	import textToHtml from '$lib/utils/textToHtml';
+	import '../zap.css';
 
 	export let notification: Notification;
 	const options: Partial<Options> = notification.options!;

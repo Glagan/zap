@@ -1,5 +1,5 @@
 <script lang="ts">
-	import notifications from '$lib/stores/notifications';
+	import notifications from '$lib/stores/zap';
 	import wrappers from '$lib/stores/wrappers';
 	import Notification from '$lib/components/Notification.svelte';
 	import zapOptions from '$lib/stores/zapOptions';

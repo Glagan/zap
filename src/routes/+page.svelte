@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ZapContainer from '$lib/components/ZapContainer.svelte';
-	import { notifications } from '$lib/stores/notifications';
+	import zap from '$lib/stores/zap';
 	import type { NotificationContent, Options, Position, Theme, Type } from '$lib/types';
 	import deepAssign from '$lib/utils/deepAssign';
 	import '../app.css';
@@ -58,7 +58,7 @@
 			content: {
 				title: 'With Style !',
 				message:
-					'Text can be *styled* **easily**, contain {{links|https://notification.nikurasu.org/}} and even ``code`` !'
+					'Text can be *styled* **easily**, contain {{links|https://zap.nikurasu.org/}} and even ``code`` !'
 			}
 		},
 		{
@@ -100,7 +100,7 @@
 						value: 'Open',
 						type: 'success',
 						onClick: () => {
-							notifications.success(
+							zap.success(
 								{
 									title: 'Another One !',
 									message: 'You opened another notification without closing the old one.'
@@ -113,7 +113,7 @@
 						value: 'Close',
 						type: 'error',
 						onClick: (notification) => {
-							notifications.message(
+							zap.message(
 								{
 									title: 'Closing...',
 									message:
@@ -137,7 +137,7 @@
 						value: 'Click me',
 						type: 'info',
 						onClick: (notification) => {
-							notifications.success(
+							zap.success(
 								{
 									title: 'Nice',
 									message: 'You did it **:)**'
@@ -206,15 +206,15 @@
 		const example = deepAssign({}, examples[currentExample]!);
 		const options: Partial<Options> = example.options ?? {};
 		options.position = position;
-		notifications[type](example.content, options);
+		zap[type](example.content, options);
 		currentExample = ++currentExample % examples.length;
 	}
 
 	function submitForm() {
 		if (content.title || content.image || content.message) {
-			notifications[type](content, options);
+			zap[type](content, options);
 		} else {
-			notifications.error({
+			zap.error({
 				title: 'Missing field',
 				message: 'You need to set at least a **title**, an **image** or a **message**.'
 			});

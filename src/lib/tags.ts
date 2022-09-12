@@ -83,3 +83,7 @@ export const tags: Record<string, TagDescription> = {
 		close: ''
 	}
 };
+
+export function addTag(name: string, tag: TagDescription) {
+	tags[name] = tag;
+}
