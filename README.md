@@ -28,7 +28,7 @@ npm install @glagan/zap # or yarn add @glagan/zap
 <ZapContainer />
 ```
 
-Once the container is available, you can display notifications by interacting with the ``notifications`` store.
+Once the container is available, you can display notifications by interacting with the ``zap`` store.
 
 ```svelte
 <script>
@@ -36,8 +36,6 @@ Once the container is available, you can display notifications by interacting wi
 
 	zap.success({ title: 'zap' });
 </script>
-
-<ZapContainer />
 ```
 
 ## Templates
