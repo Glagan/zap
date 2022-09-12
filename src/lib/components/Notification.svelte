@@ -3,9 +3,10 @@
 	import deepAssign from '$lib/utils/deepAssign';
 	import type { Notification, AnimationDefinition, Button, Theme, Options } from '$lib/types';
 	import '../zap.css';
+	import textToHtml from '$lib/utils/textToHtml';
 
 	export let notification: Notification;
-	const options: Options = notification.options!;
+	const options: Partial<Options> = notification.options!;
 
 	let inserting = true;
 	let retire = false;
@@ -17,9 +18,9 @@
 	}
 
 	function onAnimation(event: AnimationEvent) {
-		if (event.animationName == options.removeAnimation.name) {
+		if (event.animationName == options.removeAnimation!.name) {
 			destroy(false);
-		} else if (event.animationName == options.insertAnimation.name) {
+		} else if (event.animationName == options.insertAnimation!.name) {
 			inserting = false;
 			if (showProgressBar) {
 				// Set the time before removing the notification
@@ -38,7 +39,7 @@
 			retire = true;
 			if (options.events?.onDeath) {
 				(async () => {
-					await options.events.onDeath(notification);
+					await options.events!.onDeath!(notification);
 					repaint();
 				})();
 			} else {
@@ -109,9 +110,17 @@
 	class:zap-remove={addRemoveClass}
 	class:zap-close-on-click={options.closeOnClick}
 	style={inserting
-		? `animation-name: ${options.insertAnimation.name}; animation-duration: ${options.insertAnimation.duration}ms`
+		? `animation-name: ${
+				options.insertAnimation ? options.insertAnimation.name : undefined
+		  }; animation-duration: ${
+				options.insertAnimation ? options.insertAnimation.duration : undefined
+		  }ms`
 		: addRemoveClass
-		? `animation-name: ${options.removeAnimation.name}; animation-duration: ${options.removeAnimation.duration}ms`
+		? `animation-name: ${
+				options.removeAnimation ? options.removeAnimation.name : undefined
+		  }; animation-duration: ${
+				options.removeAnimation ? options.removeAnimation.duration : undefined
+		  }ms`
 		: undefined}
 	title={options.closeOnClick ? 'Click to close.' : undefined}
 	on:animationend={onAnimation}
@@ -123,12 +132,12 @@
 	{#if notification.title}
 		<h1 title={notification.title}>
 			{notification.title}
-			{#if options.closeOnClick}
+			{#if options.closeOnClick && options.closeButton}
 				<span title="Click to close." class="zap-close zap-close-title">❌</span>
 			{/if}
 		</h1>
 	{/if}
-	{#if !notification.title && options.closeOnClick}
+	{#if !notification.title && options.closeOnClick && options.closeButton}
 		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, false)}>❌</span>
 	{/if}
 	{#if notification.image || notification.message}
@@ -137,7 +146,9 @@
 				<img src={notification.image} alt={notification.imageAlt} />
 			{/if}
 			{#if notification.message}
-				<div class="zap-text">{notification.message}</div>
+				<div class="zap-text">
+					{@html textToHtml(notification.message)}
+				</div>
 			{/if}
 		</div>
 	{/if}
@@ -149,7 +160,7 @@
 					disabled={buttonsDisabled}
 					on:click={button.onClick ? button.onClick.bind(null, notification) : undefined}
 				>
-					{button.value}
+					{@html textToHtml(button.value)}
 				</button>
 			{/each}
 		</div>

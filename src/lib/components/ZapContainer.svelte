@@ -2,7 +2,7 @@
 	import notifications from '$lib/stores/notifications';
 	import wrappers from '$lib/stores/wrappers';
 	import Notification from '$lib/components/Notification.svelte';
-	import zapOptions from '$lib/stores/options';
+	import zapOptions from '$lib/stores/zapOptions';
 </script>
 
 {#each $wrappers as wrapper}

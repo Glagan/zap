@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store';
 import type { Notification, NotificationContent, Options, Theme } from '$lib/types';
-import zapOptions from './options';
+import zapOptions from './zapOptions';
 import { wrappers } from './wrappers';
 import deepAssign from '$lib/utils/deepAssign';
 

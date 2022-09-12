@@ -56,7 +56,7 @@ export type Events = {
 export type Type = 'success' | 'info' | 'error' | 'warning' | 'message';
 export type Button = {
 	type?: Type;
-	value?: string;
+	value: string;
 	onClick?: eventCallback;
 };
 
@@ -67,13 +67,15 @@ export interface Content {
 	buttons?: Button[];
 }
 
+export type RecursiveTagString = string | { tag: TagDescription; str: RecursiveTagString[] };
 export interface TagDescription {
 	type: string;
-	class: string;
+	class?: string;
+	title?: boolean;
 	open: string;
 	close: string;
-	attributes: { textContent: string | boolean } & { [key: string]: string };
-	textContent: string;
+	attributes?: { textContent?: string | boolean } & { [key: string]: string };
+	textContent?: string | boolean;
 }
 
 export interface Options {
