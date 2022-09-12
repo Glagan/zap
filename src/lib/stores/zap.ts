@@ -20,6 +20,20 @@ export const notifications = (() => {
 			options = deepAssign({}, get(zapOptions), options);
 		}
 
+		if (options.removeAllOnDisplay) {
+			notifications.length = 0;
+			for (const notification of notifications) {
+				notification.destroy();
+			}
+		} else if (options.maxNotifications && notifications.length > options.maxNotifications) {
+			const diff = -(options.maxNotifications - (notifications.length + 1));
+			if (diff > 0) {
+				for (let i = 0, max = diff; i < max; i++) {
+					notifications[i].destroy();
+				}
+			}
+		}
+
 		if (!options.insertAnimation) {
 			options.insertAnimation = { ...get(zapOptions).insertAnimation };
 		}
