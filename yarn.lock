@@ -55,6 +55,7 @@ __metadata:
   resolution: "@glagan/zap@workspace:."
   dependencies:
     "@sveltejs/adapter-auto": next
+    "@sveltejs/adapter-static": ^1.0.0-next.43
     "@sveltejs/kit": next
     "@sveltejs/package": ^1.0.0-next.3
     "@typescript-eslint/eslint-plugin": ^5.27.0
@@ -253,6 +254,13 @@ __metadata:
     set-cookie-parser: ^2.4.8
     tiny-glob: ^0.2.9
   checksum: e51ae9f2e46a707a87a20e27e9f2ff190b60eaa1d91b4e20a8c687a978aa8cebfa04663924a0c4b0733f754d7df60bd6ce02aaf247b1a3fcad1f37dc39fe1328
+  languageName: node
+  linkType: hard
+
+"@sveltejs/adapter-static@npm:^1.0.0-next.43":
+  version: 1.0.0-next.43
+  resolution: "@sveltejs/adapter-static@npm:1.0.0-next.43"
+  checksum: 02c476914f379db328565957bc138ce3909ed9c72b4629ea5344cd23439ee8128bdf3da8971de6687eb779ba291637359cea537b023bd88180d2b4193558135e
   languageName: node
   linkType: hard
 
