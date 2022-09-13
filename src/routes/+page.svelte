@@ -314,7 +314,7 @@
 			</div>
 		</div>
 		<div class="overflow-hidden border-2 border-gray-400 rounded-md bg-gray-600">
-			<p class="p-2">Try out all <b>Simple Notifications</b> parameters !</p>
+			<p class="p-2">Try out all <b>zap</b> parameters !</p>
 			<form class="p-2" on:submit|preventDefault={submitForm}>
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
 					<div>
