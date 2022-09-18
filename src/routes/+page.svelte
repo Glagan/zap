@@ -77,7 +77,7 @@
 		{
 			content: {
 				title: 'Forest',
-				image: 'https://www.publicdomainpictures.net/pictures/100000/velka/forest-1411400424AOk.jpg'
+				image: '/forest.jpg'
 			}
 		},
 		{
@@ -91,7 +91,7 @@
 			content: {
 				title: 'Image and Separator',
 				message:
-					'![You can also have other images|https://oauth.net/images/code/javascript.png]\n---\nAnd you can separate content.'
+					'![You can also have other images|/javascript.png]\n---\nAnd you can separate content.'
 			}
 		},
 		{
@@ -232,6 +232,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>@glagan/zap</title>
+</svelte:head>
+
 <div class="container mx-auto w-full lg:w-3/5 p-4 pt-0">
 	<div class="p-4 flex flex-row flex-nowrap justify-between items-center">
 		<div>
@@ -254,12 +258,12 @@
 				</span>
 			</a>
 		</div>
-		<div class="hidden md:block">
+		<div class="md:block">
 			<a href="https://ko-fi.com/Y8Y32X73U" target="_blank">
 				<img
 					height="36"
 					style="border: 0px; height: 36px"
-					src="https://cdn.ko-fi.com/cdn/kofi1.png?v=2"
+					src="/kofi.png"
 					alt="Buy Me a Coffee at ko-fi.com"
 				/>
 			</a>
