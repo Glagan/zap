@@ -1,7 +1,8 @@
 <script lang="ts">
+	import Minimark from '@glagan/minimark';
+	import '@glagan/minimark/minimark.css';
 	import notifications from '$lib/stores/zap';
 	import type { Notification, Options } from '$lib/types';
-	import textToHtml from '$lib/utils/textToHtml';
 	import '../zap.css';
 
 	export let notification: Notification;
@@ -152,22 +153,20 @@
 				<img src={notification.image} alt={notification.imageAlt} />
 			{/if}
 			{#if notification.message}
-				<div class="zap-text">
-					{@html textToHtml(notification.message)}
-				</div>
+				<Minimark text={notification.message} class="zap-text" />
 			{/if}
 		</div>
 	{/if}
 	{#if notification.buttons && notification.buttons.length > 0}
 		<div class="zap-buttons">
 			{#each notification.buttons as button}
-				<button
+				<Minimark
+					tag="button"
+					text={button.value}
 					class={`zap-button zap-${button.type}`}
 					disabled={buttonsDisabled}
 					on:click={button.onClick ? button.onClick.bind(null, notification) : undefined}
-				>
-					{@html textToHtml(button.value)}
-				</button>
+				/>
 			{/each}
 		</div>
 	{/if}

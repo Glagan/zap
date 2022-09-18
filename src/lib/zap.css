@@ -284,50 +284,6 @@
 	text-shadow: 1px 0 1px rgba(255, 255, 255, 0.8);
 	border-radius: 2px;
 }
-.zap-content .zap-text h1,
-.zap-content .zap-text h2 {
-	margin: 0.5rem 0;
-}
-.zap-content .zap-text h1 {
-	font-size: 1.2rem;
-}
-.zap-content .zap-text h2 {
-	font-size: 1.1rem;
-}
-.zap-content .zap-text img {
-	height: auto;
-	max-width: 100%;
-	margin: 0.1rem 0;
-}
-.zap-bold {
-	font-weight: bold;
-}
-.zap-italic {
-	font-style: italic;
-}
-.zap-code {
-	font-family: SFMono-Regular, Menlo, 'Lucida Console', Monaco, Consolas, 'Liberation Mono',
-		'Courier New', monospace;
-	padding: 0.1rem 0.2rem;
-	background-color: #333333;
-	color: #f7f7f7;
-	line-height: 1.4;
-	border-radius: 2px;
-	box-shadow: 0 0 1px #333333;
-}
-.zap-message .zap-code {
-	background-color: #4d4d4d;
-	box-shadow: 0 0 1px #4d4d4d;
-}
-.zap-separator {
-	display: block;
-	width: 100%;
-	border-bottom: 1px solid white;
-	border-radius: 4px;
-	height: 2px;
-	line-height: 0px;
-	margin: 0.75rem 0;
-}
 
 .zap-buttons {
 	display: flex;
@@ -357,7 +313,4 @@
 }
 .zap-button:last-child {
 	border-right: 0;
-}
-.zap-float-right {
-	float: right;
 }

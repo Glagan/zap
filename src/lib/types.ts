@@ -76,17 +76,6 @@ export interface Content {
 	classes?: string[];
 }
 
-export type RecursiveTagString = string | { tag: TagDescription; str: RecursiveTagString[] };
-export interface TagDescription {
-	type: string;
-	class?: string;
-	title?: boolean;
-	open: string;
-	close: string;
-	attributes?: { textContent?: string | boolean } & { [key: string]: string };
-	textContent?: string | boolean;
-}
-
 export interface Options {
 	position: Position;
 	maxNotifications: number;

@@ -1,9 +1,9 @@
 # zap
 
-*zap* is a library to display simple yet customizable notifications.
+*zap* is a library to display simple yet customizable notifications in Svelte.  
 You can stylize text with a simple syntax, add buttons to make the notifications interactable and add callbacks for some events during the life of a notification.
 
-You can find a live demo here: [https://zap.nikurasu.org/](https://zap.nikurasu.org/)
+You can find a live demo here: [https://zap.nikurasu.org/](https://zap.nikurasu.org/)  
 You can also run the demo locally by installing the dependencies and then run ``yarn run dev``.
 
 <p align="center">
@@ -12,8 +12,10 @@ You can also run the demo locally by installing the dependencies and then run ``
 
 ## Installation
 
+[![npm version](https://badge.fury.io/js/@glagan%2Fzap.svg)](https://badge.fury.io/js/@glagan%2Fzap)
+
 ```bash
-npm install @glagan/zap # or yarn add @glagan/zap
+yarn add @glagan/zap # or npm install @glagan/zap
 ```
 
 ## How to use
@@ -125,50 +127,10 @@ The **remove** animations are: ``fadeout``, ``scaleout`` and ``rotateout``.
 
 You can add your own animations by adding them in your own CSS files and setting the name of the animation in the parameter.
 
-## Markdown-*like* tags
+## minimark
 
-You can insert links, images and stylize text by using tags that resemble **Markdown**.
-Most of these tags can be nested to combine their effects.
-
-| Name | Description |
-|---|---|
-| Inline code | \`\`code\`\` |
-| Header (h1) | ``# Header 1\n`` |
-| Header (h2) | ``## Header 2\n`` |
-| Link | ``{{title\|http://www.example.org/}}`` or ``{{http://www.example.org/}}`` without title. |
-| Image | ``![title\|http://www.example.org/image.jpg]`` or ``![http://www.example.org/image.jpg]`` without title. |
-| Bold | ``**http://www.example.org/**`` |
-| Italic | ``*http://www.example.org/*`` |
-| Separator | ``\n---\n`` |
-| Float right | ``>*>Text<`` |
-
-Tags work by looking for an open token, an optional separator if there is a title, and the close token.
-If the tag can have a *title* you need to use ``|`` as the separator with the *content*.
-
-You can add custom tags easily by adding them with ``tags.addTag(name, definition)``.
-A tag object can have the following properties:
-
-```javascript
-{
-    type: 'span', // The node type, e.g <span>
-    class: ['class1', 'class2'], // Optional class list as an array or string to use
-    attributes: {
-        name: value
-    }, // Optional attributes to set
-    textContent: "$content", // textContent of the created node, see below for variables
-                             // If textContent is defined and not false the content cannot have childs (nested other tags)
-    title: false, // See "Title" below
-    open: '{{', // The opening token - any length
-    close: '}}' // The closing token - can be linebreak by using \n - can also be empty
-}
-```
-
-### Variables
-
-There are two usable *variables* inside attribute values textContent and title:
-
-* ``$content``: the content found between the ``open`` and ``close`` token, without the title if there is one.
-* ``$title``: the title found, if there is none it is replaced by the same value as ``$content``.
+**zap** uses [minimark](https://github.com/Glagan/minimark) to render the text inside the notifications.  
+You can check the **minimark** documentation to see how to add or write tags.
 
 ## Migration
 
@@ -176,6 +138,7 @@ If you were using **SimpleNotification**, a few changes have been made:
 
 * ``closeAnimated`` is replacing ``close`` and is now the default and the old ``close`` has been renamed ``destroy``
 * The setters have been removed, you can now directly use assignments in callbacks (e.g ``notification.title = 'Title'`` intead of ``notification.setTitle('Title')``)
+* The text renderer is now an external dependency and the tags definition (not the syntax) has changed, see [minimark](https://github.com/Glagan/minimark) documentation for the new definition
 
 ## Credits
 
