@@ -1,8 +1,8 @@
 <script lang="ts">
-	import notifications from '$lib/stores/zap';
-	import wrappers from '$lib/stores/wrappers';
+	import notifications from '$lib/stores/zap.js';
+	import wrappers from '$lib/stores/wrappers.js';
 	import Notification from '$lib/components/Notification.svelte';
-	import zapOptions from '$lib/stores/zapOptions';
+	import zapOptions from '$lib/stores/zapOptions.js';
 </script>
 
 {#each $wrappers as wrapper}

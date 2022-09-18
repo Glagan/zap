@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Minimark from '@glagan/minimark';
 	import '@glagan/minimark/minimark.css';
-	import notifications from '$lib/stores/zap';
-	import type { Notification, Options } from '$lib/types';
+	import notifications from '$lib/stores/zap.js';
+	import type { Notification, Options } from '$lib/types.js';
 	import '../zap.css';
 
 	export let notification: Notification;

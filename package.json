@@ -1,6 +1,6 @@
 {
 	"name": "@glagan/zap",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"author": "Glagan",
 	"license": "GPL-3.0",
 	"repository": {
@@ -27,7 +27,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@glagan/minimark": "^0.1.3"
+		"@glagan/minimark": "^0.1.4"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
@@ -57,9 +57,9 @@
 		"components",
 		"stores",
 		"utils",
-		"tags.*",
 		"types.*",
 		"index.*",
 		"zap.css"
-	]
+	],
+	"types": "./types.d.ts"
 }

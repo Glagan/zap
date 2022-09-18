@@ -50,10 +50,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@glagan/minimark@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@glagan/minimark@npm:0.1.3"
-  checksum: 7732aae37b1d29a6217e868b94b63697348b9e290bab6369eb53908b913189e584ca40ba6db4e92ee0e0fcadcf1ffd0fcb1cec82415e15ff4a961bf27a9dc30e
+"@glagan/minimark@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "@glagan/minimark@npm:0.1.4"
+  checksum: 745782a307ddae8d1fc31192785413d15b05df366fabce8469631b83e1dd4816c24cc5e8a366722a7dc82ae547c90e8ade8a797eb9faad68fb1cbac8e2a44624
   languageName: node
   linkType: hard
 
@@ -61,7 +61,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@glagan/zap@workspace:."
   dependencies:
-    "@glagan/minimark": ^0.1.3
+    "@glagan/minimark": ^0.1.4
     "@sveltejs/adapter-auto": next
     "@sveltejs/adapter-static": ^1.0.0-next.43
     "@sveltejs/kit": next

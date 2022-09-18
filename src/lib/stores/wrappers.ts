@@ -1,5 +1,5 @@
-import type { Position } from '$lib/types';
 import { writable } from 'svelte/store';
+import type { Position } from '$lib/types.js';
 
 export const wrappers = (() => {
 	const wrappers: Position[] = [];

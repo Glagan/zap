@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store';
-import type { Notification, NotificationContent, Options, Theme } from '$lib/types';
-import zapOptions from './zapOptions';
-import { wrappers } from './wrappers';
-import deepAssign from '$lib/utils/deepAssign';
+import type { Notification, NotificationContent, Options, Theme } from '$lib/types.js';
+import zapOptions from './zapOptions.js';
+import { wrappers } from './wrappers.js';
+import deepAssign from '$lib/utils/deepAssign.js';
 
 export const notifications = (() => {
 	const notifications: Notification[] = [];

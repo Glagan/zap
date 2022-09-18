@@ -1,6 +1,6 @@
-import type { Options } from '$lib/types';
-import deepAssign from '$lib/utils/deepAssign';
 import { writable } from 'svelte/store';
+import type { Options } from '$lib/types.js';
+import deepAssign from '$lib/utils/deepAssign.js';
 
 export const zapOptions = (() => {
 	const options: Options = {
