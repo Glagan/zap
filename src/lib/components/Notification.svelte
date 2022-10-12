@@ -126,6 +126,7 @@
 	title={options.closeOnClick ? 'Click to close.' : undefined}
 	on:animationend={onAnimation}
 	on:click={options.closeOnClick ? destroy.bind(null, true) : undefined}
+	on:keypress
 	on:mouseenter={onHover}
 	on:mouseleave={onLeave}
 	{...$$restProps}
@@ -138,6 +139,7 @@
 					title="Click to close."
 					class="zap-close zap-close-title"
 					on:click={destroy.bind(null, true)}
+					on:keypress
 				>
 					❌
 				</span>
@@ -145,7 +147,9 @@
 		</h1>
 	{/if}
 	{#if !notification.title && options.closeButton}
-		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, true)}>❌</span>
+		<span title="Click to close." class="zap-close" on:click={destroy.bind(null, true)} on:keypress>
+			❌
+		</span>
 	{/if}
 	{#if notification.image || notification.message}
 		<div class="zap-content">
