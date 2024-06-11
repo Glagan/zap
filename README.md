@@ -4,7 +4,7 @@
 You can stylize text with a simple syntax, add buttons to make the notifications interactable and add callbacks for some events during the life of a notification.
 
 You can find a live demo here: [https://zap.nikurasu.org/](https://zap.nikurasu.org/)  
-You can also run the demo locally by installing the dependencies and then run ``yarn run dev``.
+You can also run the demo locally by installing the dependencies and then run ``pnpm run dev``.
 
 <p align="center">
     <img width="320" height="92" src="screenshots/info.png">
@@ -15,7 +15,7 @@ You can also run the demo locally by installing the dependencies and then run ``
 [![npm version](https://badge.fury.io/js/@glagan%2Fzap.svg)](https://badge.fury.io/js/@glagan%2Fzap)
 
 ```bash
-yarn add @glagan/zap # or npm install @glagan/zap
+pnpm add @glagan/zap
 ```
 
 ## How to use
