@@ -5,8 +5,6 @@
 	import deepAssign from '$lib/utils/deepAssign';
 	import '../app.css';
 
-	export const prerender = true;
-
 	let type: Theme = 'success';
 
 	const content: NotificationContent = {
